@@ -1,0 +1,2163 @@
+/* ==========================================================================
+   DHANUSHKODI TOURS & TRAVELS — UI DESIGN SYSTEM & OVERLAY COMPONENT LIBRARY
+   Crafted with `agency-ui-designer` & `frontend-design` Architecture
+   WCAG 2.2 AA Compliant · 8-Point Spatial Grid · Frosted Abyssal Glassmorphism
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     1. CORE BRAND COLOR TOKENS (EXACT SPECIFICATION)
+     ------------------------------------------------------------------------ */
+  --color-ocean-abyss: #040d1a;       /* Deep Indian Ocean Abyss (Primary Canvas BG) */
+  --color-midnight-navy: #0a192f;     /* Midnight Navy (Elevated Surface / Card Base) */
+  --color-bengal-turquoise: #00e5ff;  /* Bay of Bengal Turquoise (Interactive Cyan Accent) */
+  --color-pamban-teal: #14b8a6;       /* Pamban Teal (Secondary Maritime Accent) */
+  --color-sunset-gold: #f59e0b;       /* Arichal Munai Sunset Gold (Primary CTA & Highlights) */
+  --color-warm-sand: #fde68a;         /* Warm Sand (Display Highlights & Foil Accents) */
+
+  /* Semantic & Neutral Tokens (WCAG AA Contrast Verified >= 4.5:1 on #040d1a) */
+  --color-text-primary: #f8fafc;      /* 18.4:1 contrast on #040d1a */
+  --color-text-secondary: #cbd5e1;    /* 12.6:1 contrast on #040d1a */
+  --color-text-muted: #94a3b8;        /* 7.1:1 contrast on #040d1a */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* ------------------------------------------------------------------------
+     2. FROSTED DARK GLASSMORPHISM TOKENS
+     ------------------------------------------------------------------------ */
+  --glass-bg: rgba(10, 25, 47, 0.72);
+  --glass-bg-elevated: rgba(4, 13, 26, 0.86);
+  --glass-bg-interactive: rgba(20, 184, 166, 0.12);
+  --glass-blur: blur(16px);
+
+  /* Dual Cyan/Gold Luminous Borders */
+  --border-glass-cyan: rgba(0, 229, 255, 0.28);
+  --border-glass-gold: rgba(245, 158, 11, 0.36);
+  --border-glass-subtle: rgba(253, 230, 138, 0.16);
+  --border-gradient-cyangold: linear-gradient(135deg, rgba(0, 229, 255, 0.45), rgba(245, 158, 11, 0.45));
+
+  /* ------------------------------------------------------------------------
+     3. TYPOGRAPHY TOKENS
+     ------------------------------------------------------------------------ */
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-editorial: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 2rem;       /* 32px */
+  --font-size-4xl: 2.75rem;    /* 44px */
+  --font-size-hero: clamp(2.25rem, 4.5vw, 4.1rem);
+
+  /* ------------------------------------------------------------------------
+     4. 8-POINT SPACING & ELEVATION TOKENS
+     ------------------------------------------------------------------------ */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  --shadow-glass: 0 20px 50px rgba(4, 13, 26, 0.78), 0 0 0 1px rgba(0, 229, 255, 0.14);
+  --shadow-glow-cyan: 0 0 24px rgba(0, 229, 255, 0.32);
+  --shadow-glow-gold: 0 10px 30px rgba(245, 158, 11, 0.35);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 3D Lighting Theme Mode Override: Day Mode vs Sunset Mode */
+html[data-lighting="day"] {
+  --glass-bg: rgba(10, 25, 47, 0.68);
+  --border-glass-cyan: rgba(0, 229, 255, 0.42);
+  --border-glass-gold: rgba(20, 184, 166, 0.42);
+}
+
+/* ==========================================================================
+   BASE RESET & ACCESSIBILITY GUARDRAILS
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-ocean-abyss);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--color-ocean-abyss);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: var(--space-4);
+  z-index: 9999;
+  background: var(--color-sunset-gold);
+  color: var(--color-ocean-abyss);
+  padding: var(--space-3) var(--space-6);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-bengal-turquoise);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   FROSTED DARK GLASS PANEL PRIMITIVES
+   ========================================================================== */
+.glass-panel {
+  background: linear-gradient(155deg, rgba(10, 25, 47, 0.80) 0%, rgba(4, 13, 26, 0.88) 100%);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass-cyan);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.glass-panel--gold {
+  border-color: var(--border-glass-gold);
+  box-shadow: 0 20px 50px rgba(4, 13, 26, 0.82), 0 0 0 1px rgba(245, 158, 11, 0.22);
+}
+
+/* ==========================================================================
+   3D WEBGL STAGE & LIVE GPS PIN OVERLAY
+   ========================================================================== */
+#canvas-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#webgl-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.world-pins-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.world-pin-marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.world-pin-marker .pin-tag {
+  background: rgba(4, 13, 26, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--color-bengal-turquoise);
+  color: var(--color-text-primary);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+  box-shadow: var(--shadow-glow-cyan);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.world-pin-marker.active .pin-tag {
+  background: linear-gradient(135deg, var(--color-sunset-gold), var(--color-warm-sand));
+  border-color: var(--color-warm-sand);
+  color: var(--color-ocean-abyss);
+  font-weight: 700;
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.world-pin-marker .pin-stem {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--color-bengal-turquoise), transparent);
+}
+
+.film-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, transparent 45%, rgba(4, 13, 26, 0.76) 100%);
+}
+
+/* ==========================================================================
+   COMPONENT 1: FLOATING GLASS NAVBAR WITH DAY/SUNSET 3D LIGHTING TOGGLE
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1340px, 96vw);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0.65rem 1.25rem;
+  background: rgba(4, 13, 26, 0.78);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(0, 229, 255, 0.26);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 16px 40px rgba(4, 13, 26, 0.75), inset 0 1px 0 rgba(253, 230, 138, 0.18);
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+.brand-compass-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-bengal-turquoise), var(--color-sunset-gold));
+  box-shadow: 0 0 14px var(--color-bengal-turquoise);
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.96rem;
+  letter-spacing: 0.12em;
+  color: var(--color-warm-sand);
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-bengal-turquoise);
+  letter-spacing: 0.05em;
+}
+
+.scene-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(10, 25, 47, 0.75);
+  padding: 0.22rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(0, 229, 255, 0.16);
+}
+
+.scene-nav-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.38rem 0.72rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+  min-height: 34px;
+}
+
+.scene-nav-btn .scene-pct {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-sunset-gold);
+}
+
+.scene-nav-btn:hover,
+.scene-nav-btn.active {
+  background: rgba(0, 229, 255, 0.14);
+  color: var(--color-text-primary);
+  border-color: rgba(0, 229, 255, 0.42);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.18);
+}
+
+.storyteller-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Day / Sunset 3D Lighting Toggle + Storyboard Controls */
+.ctrl-pill {
+  background: rgba(10, 25, 47, 0.85);
+  border: 1px solid rgba(253, 230, 138, 0.22);
+  padding: 0.38rem 0.75rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 0.71rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-text-secondary);
+  min-height: 34px;
+  transition: all var(--transition-fast);
+}
+
+.ctrl-pill:hover,
+.ctrl-pill.active {
+  border-color: var(--color-sunset-gold);
+  color: var(--color-text-primary);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.22);
+}
+
+.ctrl-pill strong {
+  color: var(--color-warm-sand);
+}
+
+.ctrl-pill--lighting {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(0, 229, 255, 0.16));
+  border-color: var(--color-sunset-gold);
+}
+
+/* ==========================================================================
+   DIRECTOR'S STORYBOARD HUD & LIVE 3D GPS COORDINATE BAR
+   ========================================================================== */
+.storyboard-hud {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+html[data-hud="hidden"] .storyboard-hud {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hud-corner {
+  position: absolute;
+  top: 4.8rem;
+  background: rgba(4, 13, 26, 0.84);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass-cyan);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  box-shadow: var(--shadow-glass);
+}
+
+.hud-top-left {
+  left: 1.5rem;
+  max-width: 360px;
+}
+
+.hud-top-right {
+  right: 1.5rem;
+  min-width: 295px;
+}
+
+.hud-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.hud-tag {
+  color: var(--color-warm-sand);
+  font-weight: 600;
+}
+
+.hud-beat-pill {
+  background: rgba(0, 229, 255, 0.16);
+  border: 1px solid var(--color-bengal-turquoise);
+  color: var(--color-bengal-turquoise);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.58rem;
+}
+
+.hud-gps-live {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  background: rgba(20, 184, 166, 0.14);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  border-radius: 6px;
+  color: var(--color-warm-sand);
+  font-size: 0.63rem;
+  margin-bottom: 0.45rem;
+}
+
+.hud-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.hud-meta-label {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.55rem;
+}
+
+.hud-meta-val {
+  color: var(--color-text-primary);
+  font-size: 0.64rem;
+}
+
+.hud-palette-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lut-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: inline-block;
+}
+
+.hud-telemetry-title {
+  color: var(--color-bengal-turquoise);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.06em;
+}
+
+.hud-telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.45rem;
+}
+
+.hud-telemetry-grid span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.54rem;
+}
+
+.hud-telemetry-grid strong {
+  color: var(--color-warm-sand);
+  font-size: 0.67rem;
+}
+
+.hud-easing-bar span {
+  display: block;
+  font-size: 0.54rem;
+  color: var(--color-text-muted);
+  margin-bottom: 3px;
+}
+
+.velocity-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.velocity-fill {
+  width: 5%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-bengal-turquoise), var(--color-sunset-gold));
+  transition: width 0.12s linear;
+}
+
+.hud-bottom-strip {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  background: rgba(4, 13, 26, 0.88);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass-gold);
+  border-radius: var(--radius-md);
+  padding: 0.38rem 0.55rem;
+  width: min(94vw, 980px);
+}
+
+.storyboard-frames {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.42rem;
+}
+
+.sb-frame {
+  background: rgba(10, 25, 47, 0.65);
+  border: 1px solid rgba(0, 229, 255, 0.16);
+  border-radius: var(--radius-sm);
+  padding: 0.38rem 0.55rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all var(--transition-fast);
+}
+
+.sb-frame:hover,
+.sb-frame.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--color-sunset-gold);
+}
+
+.sb-pct-badge {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.sb-frame strong {
+  font-size: 0.71rem;
+  color: var(--color-text-primary);
+}
+
+.sb-frame small {
+  font-size: 0.61rem;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   SCROLL EXPERIENCE PROGRESS BAR & MAGNETIC MICRO-INTERACTIONS
+   ========================================================================== */
+.top-scroll-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 90;
+  background: rgba(4, 13, 26, 0.6);
+  pointer-events: none;
+}
+
+.top-scroll-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-bengal-turquoise), var(--color-pamban-teal), var(--color-sunset-gold));
+  box-shadow: 0 0 12px var(--color-bengal-turquoise);
+  transition: width 0.08s linear;
+}
+
+.magnetic-btn {
+  transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s var(--ease-out-expo);
+}
+
+/* ==========================================================================
+   SIGNATURE TOUR PACKAGES SHOWCASE (4 CURATED EXPEDITIONS)
+   ========================================================================== */
+.packages-showcase-panel {
+  padding: 1.4rem 1.65rem;
+  margin-bottom: 1.35rem;
+}
+
+.pkg-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.pkg-section-title {
+  margin-bottom: 0 !important;
+  font-size: clamp(1.45rem, 2.4vw, 2.1rem) !important;
+}
+
+.pkg-active-summary {
+  background: rgba(20, 184, 166, 0.16);
+  border: 1px solid var(--color-bengal-turquoise);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.pkg-active-summary span {
+  color: var(--color-text-muted);
+}
+
+.pkg-active-summary strong {
+  color: var(--color-warm-sand);
+}
+
+.signature-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.sig-pkg-card {
+  background: rgba(4, 13, 26, 0.78);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.45rem;
+  transition: all var(--transition-fast);
+}
+
+.sig-pkg-card:hover,
+.sig-pkg-card.active {
+  background: linear-gradient(155deg, rgba(20, 184, 166, 0.22), rgba(245, 158, 11, 0.18));
+  border-color: var(--color-sunset-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.sp-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.sp-duration {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--color-bengal-turquoise);
+  letter-spacing: 0.06em;
+}
+
+.sp-price {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid var(--color-sunset-gold);
+  color: var(--color-warm-sand);
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-pill);
+}
+
+.sp-title {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.sp-desc {
+  font-size: 0.73rem;
+  color: var(--color-text-secondary);
+  line-height: 1.42;
+}
+
+.sp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.45rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+.sp-cta {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-warm-sand);
+}
+
+@media (max-width: 1080px) {
+  .signature-packages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .signature-packages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   SCENES & TYPOGRAPHY HIERARCHY
+   ========================================================================== */
+.scrolly-container {
+  position: relative;
+  z-index: 10;
+}
+
+.story-scene {
+  min-height: 118vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6.5rem 2rem 5.5rem;
+}
+
+.scene-sticky-viewport {
+  width: min(1280px, 95vw);
+  margin: 0 auto;
+}
+
+.scene-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  color: var(--color-warm-sand);
+  background: rgba(10, 25, 47, 0.85);
+  border: 1px solid var(--border-glass-gold);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.8rem;
+}
+
+.display-section {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.65rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: 0.65rem;
+}
+
+.body-prose {
+  font-size: 0.94rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.15rem;
+}
+
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-bengal-turquoise);
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   SCENE 1 (0–20%): HERO & FLOATING GLASSMORPHIC QUICK-BOOK BAR
+   ========================================================================== */
+.hero-viewport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-content-wrap {
+  max-width: 1060px;
+  width: 100%;
+  padding: 1.85rem 2rem;
+  background: radial-gradient(ellipse at center, rgba(4, 13, 26, 0.72) 0%, rgba(4, 13, 26, 0.32) 85%);
+  border-radius: var(--radius-xl);
+}
+
+.kicker-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.kicker-line {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-bengal-turquoise), var(--color-sunset-gold), transparent);
+}
+
+.kicker-text {
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  letter-spacing: 0.12em;
+  color: var(--color-warm-sand);
+}
+
+.staggered-hero-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-hero);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.05rem;
+  text-shadow: 0 12px 34px rgba(4, 13, 26, 0.92);
+}
+
+.hero-line {
+  display: block;
+}
+
+.staggered-hero-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--color-bengal-turquoise);
+}
+
+.staggered-hero-title .hero-line:nth-child(2) em {
+  color: #60a5fa;
+}
+
+.hero-gold-sub {
+  color: var(--color-warm-sand);
+}
+
+.hero-lead {
+  max-width: 780px;
+  margin: 0 auto 1.2rem;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  text-shadow: 0 2px 12px rgba(4, 13, 26, 0.95);
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: staggerReveal 0.85s var(--ease-out-expo) forwards;
+}
+.s-1 { animation-delay: 0.06s; }
+.s-2 { animation-delay: 0.16s; }
+.s-3 { animation-delay: 0.26s; }
+.s-4 { animation-delay: 0.36s; }
+.s-5 { animation-delay: 0.46s; }
+.s-6 { animation-delay: 0.56s; }
+.s-7 { animation-delay: 0.66s; }
+
+@keyframes staggerReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ocean-shader-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1.35rem;
+}
+
+.shader-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.73rem;
+  background: rgba(10, 25, 47, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.pill-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.turquoise-pill .pill-dot { background: var(--color-bengal-turquoise); box-shadow: 0 0 10px var(--color-bengal-turquoise); }
+.sunset-pill .pill-dot { background: var(--color-sunset-gold); box-shadow: 0 0 10px var(--color-sunset-gold); }
+.sapphire-pill .pill-dot { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+
+/* Floating Glassmorphic Quick-Book Bar */
+.quick-book-glass {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+  background: linear-gradient(145deg, rgba(10, 25, 47, 0.88), rgba(4, 13, 26, 0.92));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass-gold);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-glass), 0 0 30px rgba(0, 229, 255, 0.12);
+  text-align: left;
+}
+
+.qb-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-warm-sand);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.08em;
+}
+
+.qb-field select,
+.qb-field input {
+  width: 100%;
+  background: rgba(4, 13, 26, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  border-radius: var(--radius-sm);
+  padding: 0.58rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--color-text-primary);
+  min-height: 42px;
+}
+
+.qb-field select option {
+  background: var(--color-midnight-navy);
+  color: var(--color-text-primary);
+}
+
+.qb-submit-btn {
+  background: linear-gradient(135deg, var(--color-sunset-gold), var(--color-warm-sand));
+  color: var(--color-ocean-abyss);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.68rem 1.25rem;
+  min-height: 42px;
+  font-size: 0.84rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  box-shadow: var(--shadow-glow-gold);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.qb-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(245, 158, 11, 0.5);
+}
+
+/* ==========================================================================
+   COMPONENT 2: SCENE 2 — 3D TILT DESTINATION CARDS & HUD TELEMETRY
+   ========================================================================== */
+.split-flyover-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.flyover-left {
+  padding: 1.65rem;
+}
+
+/* 2x2 Grid of 3D Tilt Destination Cards */
+.tilt-destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  perspective: 1100px;
+}
+
+.tilt-dest-card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(10, 25, 47, 0.85), rgba(4, 13, 26, 0.92));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out, border-color 200ms ease, box-shadow 200ms ease;
+  overflow: hidden;
+}
+
+.tilt-dest-card:hover,
+.tilt-dest-card.active {
+  border-color: var(--color-sunset-gold);
+  box-shadow: 0 14px 32px rgba(4, 13, 26, 0.85), 0 0 20px rgba(0, 229, 255, 0.22);
+}
+
+.tilt-dest-card.active {
+  background: linear-gradient(160deg, rgba(20, 184, 166, 0.22), rgba(10, 25, 47, 0.92));
+}
+
+.tilt-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+}
+
+.pin-beacon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.16);
+  border: 1px solid var(--color-bengal-turquoise);
+  color: var(--color-bengal-turquoise);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tilt-dest-card.active .pin-beacon {
+  background: var(--color-sunset-gold);
+  border-color: var(--color-warm-sand);
+  color: var(--color-ocean-abyss);
+  box-shadow: 0 0 12px var(--color-sunset-gold);
+}
+
+.tilt-gps-coord {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-warm-sand);
+}
+
+.tilt-dest-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.tilt-dest-card small {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.landmark-hud-card {
+  padding: 1.65rem;
+  border-color: var(--border-glass-gold);
+}
+
+.hud-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.hud-live-indicator {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-bengal-turquoise);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-pamban-teal);
+  box-shadow: 0 0 10px var(--color-bengal-turquoise);
+}
+
+.hud-card-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-warm-sand);
+  margin-bottom: 0.55rem;
+}
+
+.hud-card-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.1rem;
+}
+
+.hud-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  padding: 0.85rem;
+  background: rgba(4, 13, 26, 0.65);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  margin-bottom: 1rem;
+}
+
+.hud-stat span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--color-text-muted);
+}
+
+.hud-stat strong {
+  font-size: 0.78rem;
+  color: var(--color-warm-sand);
+}
+
+.hud-action-btn {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(20, 184, 166, 0.24));
+  border: 1px solid var(--color-bengal-turquoise);
+  color: var(--color-text-primary);
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.hud-action-btn:hover {
+  background: var(--color-bengal-turquoise);
+  color: var(--color-ocean-abyss);
+}
+
+/* ==========================================================================
+   COMPONENT 3: SCENE 3 — INTERACTIVE ROUTE FILTER PILLS & CORRIDOR NETWORK
+   ========================================================================== */
+.route-network-layout {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 1.75rem;
+  align-items: end;
+}
+
+.route-panel-left {
+  padding: 1.65rem;
+}
+
+/* Category Route Filter Pills */
+.route-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.route-filter-pill {
+  background: rgba(4, 13, 26, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  color: var(--color-text-secondary);
+  padding: 0.38rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.route-filter-pill:hover,
+.route-filter-pill.active {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.24), rgba(20, 184, 166, 0.28));
+  border-color: var(--color-bengal-turquoise);
+  color: var(--color-text-primary);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
+}
+
+.route-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+}
+
+.route-city-btn {
+  background: rgba(4, 13, 26, 0.72);
+  border: 1px solid rgba(253, 230, 138, 0.18);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.route-city-btn.filtered-out {
+  opacity: 0.28;
+  transform: scale(0.97);
+}
+
+.route-city-btn:hover,
+.route-city-btn.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--color-sunset-gold);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.city-code {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-ocean-abyss);
+  background: linear-gradient(135deg, var(--color-sunset-gold), var(--color-warm-sand));
+  padding: 0.25rem 0.48rem;
+  border-radius: 6px;
+}
+
+.city-meta {
+  flex: 1;
+}
+
+.city-meta strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+}
+
+.city-meta small {
+  font-size: 0.71rem;
+  color: var(--color-text-secondary);
+}
+
+.city-elev {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.corridor-card {
+  padding: 1.65rem;
+}
+
+.corridor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.corridor-badge {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid var(--color-sunset-gold);
+  color: var(--color-warm-sand);
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+}
+
+.corridor-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-warm-sand);
+  margin-bottom: 0.5rem;
+}
+
+.corridor-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.corridor-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.1rem;
+  padding: 0.8rem;
+  background: rgba(4, 13, 26, 0.68);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.c-kpi span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--color-text-muted);
+}
+
+.c-kpi strong {
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+}
+
+.gold-outline-btn {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(0, 229, 255, 0.15));
+  border: 1px solid var(--color-sunset-gold);
+  color: var(--color-warm-sand);
+  padding: 0.72rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+}
+
+.gold-outline-btn:hover {
+  background: var(--color-sunset-gold);
+  color: var(--color-ocean-abyss);
+}
+
+/* ==========================================================================
+   COMPONENT 4: SCENE 4 — FLEET COMPARISON CARDS & 3D SHOWCASE
+   ========================================================================== */
+.fleet-showcase-layout {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fleet-left {
+  width: min(670px, 100%);
+  padding: 1.65rem;
+}
+
+/* Fleet Comparison Cards Grid */
+.fleet-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.fleet-comp-card {
+  background: rgba(4, 13, 26, 0.76);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: all var(--transition-fast);
+}
+
+.fleet-comp-card:hover,
+.fleet-comp-card.active {
+  background: linear-gradient(145deg, rgba(20, 184, 166, 0.22), rgba(245, 158, 11, 0.18));
+  border-color: var(--color-sunset-gold);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.fcc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.fleet-tab-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+}
+
+.fcc-rate-pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-ocean-abyss);
+  background: var(--color-bengal-turquoise);
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-pill);
+}
+
+.fleet-comp-card.active .fcc-rate-pill {
+  background: var(--color-sunset-gold);
+}
+
+.fleet-tab-cap {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+}
+
+.fcc-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-warm-sand);
+  padding-top: 0.25rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.fleet-toggles-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.95rem;
+}
+
+.toggle-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.pill-switch-group {
+  display: flex;
+  background: rgba(4, 13, 26, 0.82);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+}
+
+.mode-pill {
+  flex: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.42rem 0.45rem;
+  font-size: 0.71rem;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.mode-pill.active {
+  background: rgba(0, 229, 255, 0.18);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  border-color: var(--color-bengal-turquoise);
+}
+
+.fleet-pricing-card {
+  background: rgba(4, 13, 26, 0.78);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: var(--radius-md);
+  padding: 1.05rem;
+}
+
+.price-hero-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.price-big {
+  font-family: var(--font-display);
+  font-size: 2.35rem;
+  line-height: 1;
+  color: var(--color-warm-sand);
+}
+
+.price-unit {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+}
+
+.driver-bata-badge {
+  text-align: right;
+  background: rgba(20, 184, 166, 0.16);
+  border: 1px solid var(--color-pamban-teal);
+  padding: 0.38rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.driver-bata-badge span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.driver-bata-badge strong {
+  font-size: 0.84rem;
+  color: var(--color-text-primary);
+}
+
+.fleet-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.fleet-specs-grid dt {
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  color: var(--color-text-muted);
+}
+
+.fleet-specs-grid dd {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.turntable-control-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.turntable-control-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--color-sunset-gold);
+  cursor: pointer;
+}
+
+.gold-cta-btn {
+  background: linear-gradient(135deg, var(--color-sunset-gold), var(--color-warm-sand));
+  color: var(--color-ocean-abyss);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.78rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.86rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-glow-gold);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.full-width-btn {
+  width: 100%;
+}
+
+.gold-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(245, 158, 11, 0.5);
+}
+
+/* ==========================================================================
+   COMPONENT 5: SCENE 5 — PERFORATED BOARDING-PASS BOOKING WIDGET
+   ========================================================================== */
+.boarding-viewport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boarding-header {
+  text-align: center;
+  max-width: 700px;
+  margin-bottom: 1.2rem;
+}
+
+.sub-prose {
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+}
+
+.boarding-pass-perspective {
+  perspective: 1400px;
+  width: min(1040px, 95vw);
+}
+
+.boarding-pass-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 30px 260px;
+  background: linear-gradient(145deg, rgba(10, 25, 47, 0.94), rgba(4, 13, 26, 0.96));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass-gold);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(4, 13, 26, 0.9), 0 0 38px rgba(0, 229, 255, 0.16);
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  overflow: hidden;
+}
+
+.bp-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.bp-main {
+  padding: 1.5rem 1.75rem;
+}
+
+.bp-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.bp-airline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--color-warm-sand);
+}
+
+.bp-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-bengal-turquoise);
+  box-shadow: 0 0 10px var(--color-bengal-turquoise);
+}
+
+.bp-class-pill {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  background: rgba(0, 229, 255, 0.15);
+  border: 1px solid var(--color-bengal-turquoise);
+  color: var(--color-bengal-turquoise);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.bp-route-banner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.15rem;
+  padding: 0.85rem 1.05rem;
+  background: rgba(4, 13, 26, 0.72);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(253, 230, 138, 0.2);
+}
+
+.bp-iata {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-warm-sand);
+}
+
+.bp-city {
+  font-size: 0.76rem;
+  color: var(--color-text-secondary);
+}
+
+.bp-station-right {
+  text-align: right;
+}
+
+.bp-flight-arc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bp-arc-line {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed rgba(245, 158, 11, 0.6);
+  margin-bottom: 4px;
+}
+
+.bp-vehicle-icon {
+  font-size: 0.78rem;
+  color: var(--color-warm-sand);
+}
+
+.bp-arc-dist {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.bp-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.bp-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--color-warm-sand);
+  margin-bottom: 0.25rem;
+}
+
+.bp-field input,
+.bp-field select {
+  width: 100%;
+  background: rgba(4, 13, 26, 0.8);
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  border-radius: var(--radius-sm);
+  padding: 0.54rem 0.65rem;
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+  min-height: 40px;
+}
+
+.bp-field select option {
+  background: var(--color-midnight-navy);
+}
+
+.bp-submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 229, 255, 0.18);
+}
+
+.bp-live-fare span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+}
+
+.bp-live-fare strong {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-warm-sand);
+  margin-right: 0.5rem;
+}
+
+.bp-live-fare small {
+  font-size: 0.7rem;
+  color: var(--color-bengal-turquoise);
+}
+
+.stamp-cta-btn {
+  background: linear-gradient(135deg, var(--color-bengal-turquoise), var(--color-pamban-teal));
+  color: var(--color-ocean-abyss);
+  font-weight: 800;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.84rem 1.45rem;
+  font-size: 0.86rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-glow-cyan);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stamp-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0, 229, 255, 0.55);
+}
+
+/* Perforated Divider & Stub */
+.bp-perforation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.perf-line {
+  height: 100%;
+  border-left: 2px dashed rgba(253, 230, 138, 0.42);
+}
+
+.notch {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-ocean-abyss);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+.notch-top { top: -13px; }
+.notch-bottom { bottom: -13px; }
+
+.bp-stub {
+  padding: 1.5rem 1.25rem;
+  background: rgba(4, 13, 26, 0.78);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stub-header {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--color-warm-sand);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  padding-bottom: 0.45rem;
+}
+
+.stub-kv span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--color-text-muted);
+}
+
+.stub-kv strong {
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+}
+
+.status-awaiting {
+  color: var(--color-sunset-gold) !important;
+}
+
+.status-confirmed {
+  color: var(--color-bengal-turquoise) !important;
+}
+
+.barcode-num {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-warm-sand);
+  margin-top: 4px;
+}
+
+/* Physical Golden "CONFIRMED • ARICHAL MUNAI EXPRESS" Rubber-Stamp Animation */
+.ready-to-depart-stamp {
+  position: absolute;
+  top: 46%;
+  left: 44%;
+  transform: translate(-50%, -50%) rotate(-12deg) scale(2.8);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 30;
+  border: 4px double var(--color-sunset-gold);
+  outline: 2px dashed rgba(253, 230, 138, 0.65);
+  outline-offset: -7px;
+  background: linear-gradient(135deg, rgba(10, 25, 47, 0.96), rgba(4, 13, 26, 0.96));
+  padding: 0.78rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 42px rgba(245, 158, 11, 0.65), inset 0 0 22px rgba(245, 158, 11, 0.32);
+  text-align: center;
+}
+
+.ready-to-depart-stamp.stamped {
+  animation: slamStamp 0.58s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes slamStamp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-24deg) scale(3.2);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-10deg) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-12deg) scale(1);
+  }
+}
+
+.stamp-sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--color-bengal-turquoise);
+}
+
+.stamp-main {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--color-warm-sand);
+  text-shadow: 0 0 16px rgba(245, 158, 11, 0.85);
+  margin: 2px 0;
+}
+
+.stamp-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-sunset-gold);
+}
+
+/* ==========================================================================
+   WHIMSY INJECTOR & DESIGN SPELLS: COMPASS TICKER, MAGNETIC SHIMMER & CONFETTI
+   ========================================================================== */
+.compass-rose-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.18), rgba(4, 13, 26, 0.9));
+  border: 1px solid rgba(0, 229, 255, 0.38);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+  transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease;
+}
+
+.brand-mark:hover .compass-rose-wrap {
+  transform: scale(1.1) rotate(12deg);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.55);
+}
+
+#compass-needle-group {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gps-ticker-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1px;
+}
+
+.compass-bearing-pill {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--color-ocean-abyss);
+  background: linear-gradient(135deg, var(--color-sunset-gold), var(--color-warm-sand));
+  padding: 0.06rem 0.38rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.gps-flash {
+  color: var(--color-warm-sand) !important;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+}
+
+/* Specular Shimmer on Magnetic Buttons */
+.magnetic-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.magnetic-btn:hover::before {
+  left: 130%;
+}
+
+/* Confetti & Golden Sparkles Celebration Overlay */
+.confetti-sparkle-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 120;
+  overflow: hidden;
+}
+
+.confetti-particle {
+  position: absolute;
+  will-change: transform, opacity;
+  pointer-events: none;
+  animation: confettiBurst var(--dur, 1.4s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(0.4);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.75), calc(var(--dy) * 0.75)) rotate(180deg) scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), calc(var(--dy) + 110px)) rotate(380deg) scale(0.5);
+  }
+}
+
+.whimsy-toast {
+  position: fixed;
+  bottom: 4.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 130;
+  background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(4, 13, 26, 0.96));
+  border: 1px solid var(--color-sunset-gold);
+  color: var(--color-warm-sand);
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 24px rgba(245, 158, 11, 0.4);
+  animation: toastPop 0.35s var(--ease-out-expo) forwards;
+}
+
+@keyframes toastPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 16px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS & REDUCED MOTION
+   ========================================================================== */
+@media (max-width: 1080px) {
+  .site-header {
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+  }
+  .quick-book-glass,
+  .split-flyover-layout,
+  .route-network-layout {
+    grid-template-columns: 1fr;
+  }
+  .boarding-pass-card {
+    grid-template-columns: 1fr;
+  }
+  .bp-perforation {
+    display: none;
+  }
+  .hud-corner {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .scene-nav {
+    display: none;
+  }
+  .tilt-destinations-grid,
+  .fleet-comparison-grid,
+  .bp-form-grid,
+  .storyboard-frames {
+    grid-template-columns: 1fr;
+  }
+  .hud-bottom-strip {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .stagger-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

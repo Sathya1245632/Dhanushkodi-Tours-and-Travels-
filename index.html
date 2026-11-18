@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="cinematic" data-hud="visible" data-lighting="sunset">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dhanushkodi Tours &amp; Travels — 3D Coastal &amp; South India Scrollytelling Experience</title>
+  <meta name="description" content="Book Rameswaram Local Sightseeing, Dhanushkodi Sunrise/Sunset Tour, Madurai-Rameswaram-Kanyakumari Temple Circuit, and Hills &amp; Coast Packages in interactive 3D." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false },
+      theme: {
+        extend: {
+          colors: {
+            oceanAbyss: '#040d1a',
+            midnightNavy: '#0a192f',
+            bengalTurquoise: '#00e5ff',
+            pambanTeal: '#14b8a6',
+            sunsetGold: '#f59e0b',
+            warmSand: '#fde68a'
+          },
+          fontFamily: {
+            display: ['Cinzel', 'Playfair Display', 'serif'],
+            editorial: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to 5-Scene Narrative &amp; Tour Booking</a>
+
+  <!-- Top Scroll Experience Progress Indicator -->
+  <div class="top-scroll-track" aria-hidden="true">
+    <div id="top-scroll-progress" class="top-scroll-fill"></div>
+  </div>
+
+  <!-- Fixed 3D WebGL Canvas Stage + Dynamic 3D World-Space Projected Pins Overlay -->
+  <div id="canvas-stage" aria-hidden="true">
+    <canvas id="webgl-canvas"></canvas>
+    <div id="world-pins-layer" class="world-pins-layer"></div>
+    <div class="film-grain"></div>
+    <div class="vignette-overlay"></div>
+  </div>
+
+  <!-- Confetti & Golden Sparkles Celebration Layer (`agency-whimsy-injector` + `design-spells`) -->
+  <div id="confetti-sparkle-layer" class="confetti-sparkle-layer" aria-hidden="true"></div>
+
+  <!-- Live Screen-Reader Narrative Announcer -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- =====================================================================
+       COMPONENT 1: FLOATING GLASS NAVBAR WITH LIVE ANIMATED COMPASS & GPS TICKER
+       ===================================================================== -->
+  <header class="site-header" role="banner">
+    <div class="brand-lockup">
+      <a href="#scene-1" class="brand-mark" id="brand-compass-trigger" aria-label="Dhanushkodi Tours and Travels Home" title="Click 3x for Golden Hour Ocean Blessing ✨">
+        <div class="compass-rose-wrap" aria-hidden="true">
+          <svg id="header-compass-svg" class="compass-rose-svg" viewBox="0 0 36 36" width="30" height="30">
+            <circle cx="18" cy="18" r="16" fill="rgba(4,13,26,0.85)" stroke="rgba(0,229,255,0.45)" stroke-width="1.2" stroke-dasharray="2,2"/>
+            <circle cx="18" cy="18" r="12" fill="none" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
+            <g id="compass-needle-group" style="transform-origin: 18px 18px;">
+              <polygon points="18,3 21,18 18,15 15,18" fill="#f59e0b"/>
+              <polygon points="18,33 21,18 18,21 15,18" fill="#00e5ff"/>
+              <circle cx="18" cy="18" r="2.2" fill="#fde68a"/>
+            </g>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">DHANUSHKODI TOURS &amp; TRAVELS</span>
+          <div class="gps-ticker-row">
+            <span class="compass-bearing-pill" id="nav-compass-bearing">138° SE</span>
+            <span class="brand-subtitle" id="nav-live-gps">09°09'09"N 79°26'46"E — Arichal Munai</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <nav class="scene-nav" aria-label="5-Scene Storyboard Navigation">
+      <button type="button" class="scene-nav-btn active" data-target="0.02">
+        <span class="scene-pct">0–20%</span>
+        <span class="scene-label">1. Hero</span>
+      </button>
+      <button type="button" class="scene-nav-btn" data-target="0.28">
+        <span class="scene-pct">20–45%</span>
+        <span class="scene-label">2. Pamban &amp; Tours</span>
+      </button>
+      <button type="button" class="scene-nav-btn" data-target="0.56">
+        <span class="scene-pct">45–70%</span>
+        <span class="scene-label">3. Route Network</span>
+      </button>
+      <button type="button" class="scene-nav-btn" data-target="0.79">
+        <span class="scene-pct">70–90%</span>
+        <span class="scene-label">4. 3D Fleet</span>
+      </button>
+      <button type="button" class="scene-nav-btn" data-target="0.96">
+        <span class="scene-pct">90–100%</span>
+        <span class="scene-label">5. Boarding Pass</span>
+      </button>
+    </nav>
+
+    <div class="storyteller-controls" role="group" aria-label="3D Lighting and Experience Controls">
+      <button type="button" id="toggle-lighting-btn" class="ctrl-pill ctrl-pill--lighting magnetic-btn active" aria-pressed="true" title="Switch between Sunset Gold and Tropical Day 3D Theme">
+        <span class="ctrl-icon" id="lighting-icon">🌅</span>
+        <span class="ctrl-text">Theme: <strong id="lighting-state-label">Sunset Gold</strong></span>
+      </button>
+      <button type="button" id="toggle-hud-btn" class="ctrl-pill active" aria-pressed="true" title="Toggle Visual Storyteller Director's HUD">
+        <span class="ctrl-icon">🎬</span>
+        <span class="ctrl-text">HUD: <strong id="hud-state-label">ON</strong></span>
+      </button>
+      <button type="button" id="toggle-motion-btn" class="ctrl-pill" aria-pressed="false" title="Toggle between 3D Spline Motion and WCAG Calm Keyframes">
+        <span class="ctrl-icon">♿</span>
+        <span class="ctrl-text">Motion: <strong id="motion-state-label">Cinematic</strong></span>
+      </button>
+      <button type="button" id="toggle-audio-btn" class="ctrl-pill" aria-pressed="false" title="Toggle Ambient Ocean Soundscape">
+        <span class="ctrl-icon">🔊</span>
+        <span class="ctrl-text"><strong id="audio-state-label">Muted</strong></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Director's Storyboard Viewfinder & Live 3D GPS Telemetry HUD -->
+  <aside id="storyboard-hud" class="storyboard-hud" aria-label="Visual Storyteller Telemetry HUD">
+    <div class="hud-corner hud-top-left">
+      <div class="hud-badge-row">
+        <span class="hud-tag" id="hud-scene-code">SCENE 1 · 00%–20% SCROLL</span>
+        <span class="hud-beat-pill" id="hud-narrative-beat">HERO · TWIN-OCEAN GLSL SHADERS</span>
+      </div>
+      <div class="hud-gps-live">
+        <span>🛰️ LIVE 3D GPS:</span>
+        <strong id="hud-gps-coords">09°09'09"N 79°26'46"E — Arichal Munai</strong>
+      </div>
+      <div class="hud-meta-grid">
+        <div class="hud-meta-item">
+          <span class="hud-meta-label">EMOTIONAL BEAT</span>
+          <span class="hud-meta-val" id="hud-emotion">Golden Sunset Awe &amp; Discovery</span>
+        </div>
+        <div class="hud-meta-item">
+          <span class="hud-meta-label">ACTIVE PACKAGE</span>
+          <span class="hud-meta-val" id="hud-focus">Dhanushkodi Sunrise/Sunset Tour</span>
+        </div>
+      </div>
+      <div class="hud-palette-row" aria-label="Active Brand Color Tokens">
+        <span class="hud-meta-label">TOKENS:</span>
+        <span class="lut-swatch" id="lut-1" style="background: #040d1a" title="Deep Indian Ocean Abyss (#040d1a)"></span>
+        <span class="lut-swatch" id="lut-2" style="background: #0a192f" title="Midnight Navy (#0a192f)"></span>
+        <span class="lut-swatch" id="lut-3" style="background: #00e5ff" title="Bay of Bengal Turquoise (#00e5ff)"></span>
+        <span class="lut-swatch" id="lut-4" style="background: #14b8a6" title="Pamban Teal (#14b8a6)"></span>
+        <span class="lut-swatch" id="lut-5" style="background: #f59e0b" title="Arichal Munai Sunset Gold (#f59e0b)"></span>
+        <span class="lut-swatch" id="lut-6" style="background: #fde68a" title="Warm Sand (#fde68a)"></span>
+      </div>
+    </div>
+
+    <div class="hud-corner hud-top-right">
+      <div class="hud-telemetry-title">3D CAMERA &amp; MOTION TELEMETRY</div>
+      <div class="hud-telemetry-grid">
+        <div><span>LENS / FOV</span><strong id="hud-lens">35mm · 45°</strong></div>
+        <div><span>CAM POS (X,Y,Z)</span><strong id="hud-cam-pos">0.0, 13.5, 34.0</strong></div>
+        <div><span>BANK ROLL</span><strong id="hud-roll">0.0°</strong></div>
+        <div><span>SCROLL PROGRESS</span><strong id="hud-scroll-pct">0.0%</strong></div>
+      </div>
+      <div class="hud-easing-bar">
+        <span>SCROLL PROGRESS BAR</span>
+        <div class="velocity-track"><div id="hud-progress-fill" class="velocity-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- Bottom Interactive 5-Scene Storyboard Strip -->
+    <div class="hud-bottom-strip">
+      <div class="storyboard-frames" role="list" aria-label="5-Scene Storyboard Scrubber">
+        <button type="button" class="sb-frame active" data-scroll="0.02" role="listitem">
+          <span class="sb-pct-badge">0–20%</span>
+          <strong>Scene 1: Sunset Hero</strong>
+          <small>Twin Oceans + Quick-Book</small>
+        </button>
+        <button type="button" class="sb-frame" data-scroll="0.28" role="listitem">
+          <span class="sb-pct-badge">20–45%</span>
+          <strong>Scene 2: Pamban &amp; Tours</strong>
+          <small>4 Packages + 3D Tilt Pins</small>
+        </button>
+        <button type="button" class="sb-frame" data-scroll="0.56" role="listitem">
+          <span class="sb-pct-badge">45–70%</span>
+          <strong>Scene 3: Route Network</strong>
+          <small>Filter Pills + 6 Golden Arcs</small>
+        </button>
+        <button type="button" class="sb-frame" data-scroll="0.79" role="listitem">
+          <span class="sb-pct-badge">70–90%</span>
+          <strong>Scene 4: Fleet Showcase</strong>
+          <small>Comparison Cards + AC</small>
+        </button>
+        <button type="button" class="sb-frame" data-scroll="0.96" role="listitem">
+          <span class="sb-pct-badge">90–100%</span>
+          <strong>Scene 5: Boarding Pass</strong>
+          <small>Perforated Widget + Stamp</small>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =====================================================================
+       MAIN 5-SCENE SCROLLYTELLING CONTAINER
+       ===================================================================== -->
+  <main id="main-content" class="scrolly-container">
+
+    <!-- =================================================================
+         SCENE 1 (0–20% SCROLL - HERO):
+         Interactive 3D globe & coastal terrain showing Dhanushkodi sandbar
+         (Arichal Munai) between two animated shader oceans under a golden
+         sunset sky. Staggered hero title + floating glassmorphic Quick-Book bar.
+         ================================================================= -->
+    <section id="scene-1" class="story-scene scene-hero" aria-labelledby="scene1-title" data-scene="1">
+      <div class="scene-sticky-viewport hero-viewport">
+        <div class="hero-content-wrap">
+          <div class="kicker-row stagger-item s-1">
+            <span class="kicker-line"></span>
+            <span class="kicker-text">09°09'09"N 79°26'46"E — ARICHAL MUNAI · SCENE 01 (0–20% SCROLL)</span>
+            <span class="kicker-line"></span>
+          </div>
+
+          <!-- Staggered Heritage Display Hero Title -->
+          <h1 id="scene1-title" class="staggered-hero-title">
+            <span class="hero-line stagger-item s-2">Where the Turquoise <em>Bay of Bengal</em></span>
+            <span class="hero-line stagger-item s-3">Meets the Abyssal <em>Indian Ocean</em></span>
+            <span class="hero-line hero-gold-sub stagger-item s-4">At Dhanushkodi’s Golden Horizon.</span>
+          </h1>
+
+          <p class="hero-lead stagger-item s-5">
+            Experience India’s last road at <strong>Arichal Munai</strong>, glide across the <strong>Pamban Sea Bridge</strong>, and customize your private cab or group tour across <strong>Rameswaram, Madurai, Kanyakumari, Munnar, Kodaikanal, Ooty &amp; Tirupati</strong>.
+          </p>
+
+          <!-- Ocean Shader Legend Badges -->
+          <div class="ocean-shader-pills stagger-item s-6" aria-label="Twin Ocean Shader Indicator">
+            <div class="shader-pill turquoise-pill">
+              <span class="pill-dot"></span>
+              <span><strong>North Crest:</strong> Bay of Bengal Turquoise (<code>#00e5ff</code>)</span>
+            </div>
+            <div class="shader-pill sunset-pill">
+              <span class="pill-dot"></span>
+              <span><strong>Confluence Spit:</strong> Arichal Munai Sunset Gold (<code>#f59e0b</code>)</span>
+            </div>
+            <div class="shader-pill sapphire-pill">
+              <span class="pill-dot"></span>
+              <span><strong>South Swell:</strong> Deep Indian Ocean Abyss (<code>#040d1a</code>)</span>
+            </div>
+          </div>
+
+          <!-- Floating Glassmorphic Quick-Book Bar -->
+          <form id="quick-book-bar" class="quick-book-glass stagger-item s-7" aria-label="Quick Book Expedition Bar">
+            <div class="qb-field">
+              <label for="qb-pickup">PICKUP HUB</label>
+              <select id="qb-pickup" name="pickup">
+                <option value="Rameswaram Railway / Bus Hub">Rameswaram Hub</option>
+                <option value="Madurai Airport / Junction (IXM)">Madurai Airport (IXM)</option>
+                <option value="Mandapam / Pamban Bridge">Mandapam / Pamban</option>
+                <option value="Chennai / Trichy Airport">Trichy / Chennai</option>
+              </select>
+            </div>
+
+            <div class="qb-field">
+              <label for="qb-package">SIGNATURE TOUR PACKAGE</label>
+              <select id="qb-package" name="package">
+                <option value="dhanushkodi_sunset" selected>Dhanushkodi Sunrise/Sunset Tour</option>
+                <option value="rameswaram_local">Rameswaram Local Sightseeing (12 Spots)</option>
+                <option value="temple_circuit">Madurai-Rameswaram-Kanyakumari Temple Circuit</option>
+                <option value="hills_coast">Hills &amp; Coast Package (Rameswaram + Munnar/Kodai)</option>
+              </select>
+            </div>
+
+            <div class="qb-field">
+              <label for="qb-vehicle">PREFERRED FLEET</label>
+              <select id="qb-vehicle" name="vehicle">
+                <option value="innova" selected>Innova Crysta SUV (6+1 AC)</option>
+                <option value="tempo">Luxury Tempo Traveller (12/17 AC)</option>
+                <option value="sedan">Comfort Sedan Etios/Dzire (4+1 AC)</option>
+                <option value="coach">Luxury AC Coach (35/45 Seater)</option>
+              </select>
+            </div>
+
+            <div class="qb-field">
+              <label for="qb-date">DEPARTURE DATE</label>
+              <input type="date" id="qb-date" name="date" required />
+            </div>
+
+            <button type="submit" class="qb-submit-btn magnetic-btn">
+              <span>Lock Package &amp; Boarding Pass</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SCENE 2 (20–45% SCROLL - PAMBAN FLYOVER, 4 LANDMARKS & 4 SIGNATURE TOUR PACKAGES):
+         Scroll-linked 3D camera flies along Pamban Sea Bridge and Dhanushkodi
+         highway with glowing 3D pins + interactive Signature Tour Packages.
+         ================================================================= -->
+    <section id="scene-2" class="story-scene scene-flyover" aria-labelledby="scene2-title" data-scene="2">
+      <div class="scene-sticky-viewport">
+        <!-- Top Row: 4 Signature Tour Packages Selector -->
+        <div class="packages-showcase-panel glass-panel gs-reveal">
+          <div class="pkg-header-row">
+            <div>
+              <span class="scene-badge">CURATED EXPEDITIONS · CLICK ANY PACKAGE TO PREVIEW 3D ROUTE &amp; FARE</span>
+              <h2 class="display-section pkg-section-title">Signature Coastal, Temple &amp; Hill Packages</h2>
+            </div>
+            <div class="pkg-active-summary" id="pkg-live-pill">
+              <span>SELECTED:</span>
+              <strong id="pkg-selected-title">Dhanushkodi Sunrise/Sunset Tour</strong>
+            </div>
+          </div>
+
+          <div class="signature-packages-grid" role="tablist" aria-label="4 Signature Tour Packages">
+            <!-- Package 1: Rameswaram Local Sightseeing -->
+            <button type="button" role="tab" aria-selected="false" class="sig-pkg-card" data-pkg="rameswaram_local">
+              <div class="sp-top">
+                <span class="sp-duration">FULL DAY · 12 SPOTS</span>
+                <span class="sp-price" data-base-sedan="2800" data-base-innova="3800">From ₹2,800</span>
+              </div>
+              <h3 class="sp-title">Rameswaram Local Sightseeing</h3>
+              <p class="sp-desc"> Ramanathaswamy Temple 22 Theerthams, Kalam Memorial, Pamban Bridge, Panchamukhi Hanuman &amp; Villoondi Theertham.</p>
+              <div class="sp-footer">
+                <span class="mono-tag">85 KM ISLAND CIRCUIT</span>
+                <span class="sp-cta">Select Package →</span>
+              </div>
+            </button>
+
+            <!-- Package 2: Dhanushkodi Sunrise/Sunset Tour -->
+            <button type="button" role="tab" aria-selected="true" class="sig-pkg-card active" data-pkg="dhanushkodi_sunset">
+              <div class="sp-top">
+                <span class="sp-duration">GOLDEN HOUR · 6 HRS</span>
+                <span class="sp-price" data-base-sedan="2400" data-base-innova="3400">From ₹2,400</span>
+              </div>
+              <h3 class="sp-title">Dhanushkodi Sunrise/Sunset Tour</h3>
+              <p class="sp-desc">Arichal Munai twin-ocean confluence tip, 1964 Ghost Town Coral Church &amp; Railway Ruins, Kothandaramaswamy Lagoon Temple.</p>
+              <div class="sp-footer">
+                <span class="mono-tag">60 KM NH-87 CORRIDOR</span>
+                <span class="sp-cta">Active Package ✦</span>
+              </div>
+            </button>
+
+            <!-- Package 3: Madurai-Rameswaram-Kanyakumari Temple Circuit -->
+            <button type="button" role="tab" aria-selected="false" class="sig-pkg-card" data-pkg="temple_circuit">
+              <div class="sp-top">
+                <span class="sp-duration">3 DAYS / 2 NIGHTS</span>
+                <span class="sp-price" data-base-sedan="9800" data-base-innova="13500">From ₹9,800</span>
+              </div>
+              <h3 class="sp-title">Madurai-Rameswaram-Kanyakumari Temple Circuit</h3>
+              <p class="sp-desc">Meenakshi Amman Temple, Pamban Sea Bridge, Rameswaram Jyotirlinga, Arichal Munai, Tiruchendur &amp; Kanyakumari Sunrise.</p>
+              <div class="sp-footer">
+                <span class="mono-tag">520 KM SPIRITUAL TRIANGLE</span>
+                <span class="sp-cta">Select Package →</span>
+              </div>
+            </button>
+
+            <!-- Package 4: Hills & Coast Package -->
+            <button type="button" role="tab" aria-selected="false" class="sig-pkg-card" data-pkg="hills_coast">
+              <div class="sp-top">
+                <span class="sp-duration">5 DAYS / 4 NIGHTS</span>
+                <span class="sp-price" data-base-sedan="15800" data-base-innova="21500">From ₹15,800</span>
+              </div>
+              <h3 class="sp-title">Hills &amp; Coast Package</h3>
+              <p class="sp-desc">Twin oceans of Dhanushkodi &amp; Rameswaram paired with misty Western Ghats tea estates in Munnar, Kodaikanal &amp; Ooty.</p>
+              <div class="sp-footer">
+                <span class="mono-tag">780 KM OCEAN-TO-GHATS</span>
+                <span class="sp-cta">Select Package →</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bottom Row: 3D Tilt Coastal Landmark Cards & Live HUD Telemetry -->
+        <div class="split-flyover-layout gs-reveal">
+          <div class="flyover-left glass-panel">
+            <div class="scene-badge">SCENE 02 (20–45% SCROLL) · PAMBAN SEA BRIDGE &amp; NH-87 FLYOVER</div>
+            <h2 id="scene2-title" class="display-section">
+              Interactive 3D Tilt Coastal Landmarks
+            </h2>
+            <p class="body-prose">
+              Hover to tilt each frosted glass destination card in 3D space or click to fly the 3D WebGL camera directly to its glowing coastal beacon.
+            </p>
+
+            <div class="tilt-destinations-grid" role="tablist" aria-label="4 Glowing 3D Coastal Landmarks">
+              <button type="button" role="tab" aria-selected="true" class="tilt-dest-card landmark-pin-btn active" data-pin="pamban">
+                <div class="tilt-card-top">
+                  <span class="pin-beacon">01</span>
+                  <span class="tilt-gps-coord">09°16'58"N 79°12'20"E</span>
+                </div>
+                <strong>Pamban Sea Bridge</strong>
+                <small>2.06 km Cantilever &amp; Vertical Lift Span with moving Pamban Express train.</small>
+              </button>
+
+              <button type="button" role="tab" aria-selected="false" class="tilt-dest-card landmark-pin-btn" data-pin="temple">
+                <div class="tilt-card-top">
+                  <span class="pin-beacon">02</span>
+                  <span class="tilt-gps-coord">09°17'17"N 79°19'02"E</span>
+                </div>
+                <strong>Ramanathaswamy Temple</strong>
+                <small>Sacred Jyotirlinga with 1,219-pillar corridor &amp; 22 Theertham wells.</small>
+              </button>
+
+              <button type="button" role="tab" aria-selected="false" class="tilt-dest-card landmark-pin-btn" data-pin="ruins">
+                <div class="tilt-card-top">
+                  <span class="pin-beacon">03</span>
+                  <span class="tilt-gps-coord">09°10'42"N 79°24'58"E</span>
+                </div>
+                <strong>Ghost Town Ruins</strong>
+                <small>1964 cyclone-preserved coral-stone church, railway station &amp; post office.</small>
+              </button>
+
+              <button type="button" role="tab" aria-selected="false" class="tilt-dest-card landmark-pin-btn" data-pin="arichal">
+                <div class="tilt-card-top">
+                  <span class="pin-beacon">04</span>
+                  <span class="tilt-gps-coord">09°09'09"N 79°26'46"E</span>
+                </div>
+                <strong>Arichal Munai Tip</strong>
+                <small>Final land tip of India where Bay of Bengal meets the Indian Ocean.</small>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Floating HUD Info Card -->
+          <div class="flyover-right">
+            <aside id="landmark-hud-card" class="landmark-hud-card glass-panel glass-panel--gold" aria-live="polite">
+              <div class="hud-card-top">
+                <span class="hud-live-indicator"><span class="pulse-dot"></span> 3D PIN TELEMETRY LOCKED</span>
+                <span id="pin-hud-coords" class="mono-tag">09°16'58"N 79°12'20"E — Pamban Bridge</span>
+              </div>
+              <h3 id="pin-hud-title" class="hud-card-title">Pamban Sea Bridge &amp; Vertical Lift Span</h3>
+              <p id="pin-hud-desc" class="hud-card-desc">
+                Suspended above emerald Palk Strait shallows, India's first sea bridge (2.06 km) and the new vertical-lift railway span carry moving trains and coastal highway traffic.
+              </p>
+              <div class="hud-stats-row">
+                <div class="hud-stat">
+                  <span>DISTANCE FROM HUB</span>
+                  <strong id="pin-hud-dist">12 km West of Rameswaram</strong>
+                </div>
+                <div class="hud-stat">
+                  <span>IDEAL HALT WINDOW</span>
+                  <strong id="pin-hud-time">06:30 AM – 08:00 AM (Sunrise)</strong>
+                </div>
+                <div class="hud-stat">
+                  <span>INCLUDED IN</span>
+                  <strong id="pin-hud-pkg">All Local &amp; Outstation Cabs</strong>
+                </div>
+              </div>
+              <div class="hud-card-actions">
+                <button type="button" id="add-pin-to-pass-btn" class="hud-action-btn magnetic-btn">
+                  <span>✦ Priority Halt Added to Boarding Pass</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SCENE 3 (45–70% SCROLL - INTERACTIVE SOUTH INDIA ROUTE NETWORK):
+         Component 3: Interactive Route Filter Pills + 6 Golden Particle Arcs
+         ================================================================= -->
+    <section id="scene-3" class="story-scene scene-routes" aria-labelledby="scene3-title" data-scene="3">
+      <div class="scene-sticky-viewport route-network-layout gs-reveal">
+        <div class="route-panel-left glass-panel">
+          <div class="scene-badge">SCENE 03 (45–70% SCROLL) · 3D SOUTH INDIA TOPOGRAPHICAL NETWORK</div>
+          <h2 id="scene3-title" class="display-section">
+            Six Golden Particle Corridors Across South India
+          </h2>
+          <p class="body-prose">
+            Filter by terrain archetype or click any destination pill to fly the 3D camera along its <strong>Golden Particle Arc</strong> from Rameswaram &amp; Dhanushkodi.
+          </p>
+
+          <!-- COMPONENT 3: INTERACTIVE ROUTE FILTER PILLS -->
+          <div class="route-filter-pills" role="group" aria-label="Filter South India Route Corridors">
+            <button type="button" class="route-filter-pill active" data-filter="all">All Corridors (6)</button>
+            <button type="button" class="route-filter-pill" data-filter="temple">🛕 Temple &amp; Heritage</button>
+            <button type="button" class="route-filter-pill" data-filter="hills">⛰️ Western Ghats Hills</button>
+            <button type="button" class="route-filter-pill" data-filter="coastal">🌊 Three-Ocean Coastal</button>
+          </div>
+
+          <!-- 6 Destination Route Buttons -->
+          <div class="route-cities-grid" role="tablist" aria-label="South India Destination Corridors">
+            <button type="button" role="tab" aria-selected="true" class="route-city-btn active" data-city="madurai" data-category="temple">
+              <span class="city-code">IXM</span>
+              <div class="city-meta">
+                <strong>Madurai</strong>
+                <small>175 km · 3.2 hrs · NH-87</small>
+              </div>
+              <span class="city-elev">+101m</span>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="route-city-btn" data-city="kanyakumari" data-category="coastal">
+              <span class="city-code">CAPE</span>
+              <div class="city-meta">
+                <strong>Kanyakumari</strong>
+                <small>310 km · 5.5 hrs · Coastal ECR</small>
+              </div>
+              <span class="city-elev">+30m</span>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="route-city-btn" data-city="munnar" data-category="hills">
+              <span class="city-code">MNR</span>
+              <div class="city-meta">
+                <strong>Munnar Hills</strong>
+                <small>335 km · 7.0 hrs · Ghats Climb</small>
+              </div>
+              <span class="city-elev">+1,532m</span>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="route-city-btn" data-city="kodaikanal" data-category="hills">
+              <span class="city-code">KODAI</span>
+              <div class="city-meta">
+                <strong>Kodaikanal</strong>
+                <small>290 km · 6.0 hrs · Palani Hills</small>
+              </div>
+              <span class="city-elev">+2,133m</span>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="route-city-btn" data-city="ooty" data-category="hills">
+              <span class="city-code">OOTY</span>
+              <div class="city-meta">
+                <strong>Ooty (Nilgiris)</strong>
+                <small>455 km · 8.5 hrs · 36 Hairpins</small>
+              </div>
+              <span class="city-elev">+2,240m</span>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="route-city-btn" data-city="tirupati" data-category="temple">
+              <span class="city-code">TIR</span>
+              <div class="city-meta">
+                <strong>Tirupati</strong>
+                <small>610 km · 10.5 hrs · NH-38</small>
+              </div>
+              <span class="city-elev">+853m</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Selected Corridor Telemetry Card -->
+        <div class="route-panel-right">
+          <div id="corridor-telemetry-card" class="corridor-card glass-panel glass-panel--gold" aria-live="polite">
+            <div class="corridor-header">
+              <span class="mono-tag" id="corridor-code">GOLDEN ARC: RAMESWARAM / DHANUSHKODI ➔ MADURAI</span>
+              <span class="corridor-badge" id="corridor-highway">NH-87 EXPRESSWAY</span>
+            </div>
+            <h3 id="corridor-title" class="corridor-title">Madurai Temple &amp; Airport Corridor</h3>
+            <p id="corridor-desc" class="corridor-desc">
+              Four-lane coastal-to-plains highway linking Pamban Island to Sri Meenakshi Amman Temple, Thirumalai Nayakkar Palace, and Madurai International Airport.
+            </p>
+            <div class="corridor-kpi-row">
+              <div class="c-kpi">
+                <span>ONE-WAY DISTANCE</span>
+                <strong id="corridor-km">175 KM (3 hrs 15 mins)</strong>
+              </div>
+              <div class="c-kpi">
+                <span>TOPOGRAPHY</span>
+                <strong id="corridor-topo">Coastal Causeway to Vaigai Plains (+101m)</strong>
+              </div>
+              <div class="c-kpi">
+                <span>EST. SEDAN / INNOVA</span>
+                <strong id="corridor-price">₹2,625 / ₹3,550</strong>
+              </div>
+            </div>
+            <button type="button" id="select-corridor-btn" class="gold-outline-btn magnetic-btn">
+              <span>Set Route on Boarding Pass (DHK ➔ <span id="corridor-btn-city">Madurai</span>)</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SCENE 4 (70–90% SCROLL - CAB & TOUR FLEET SHOWCASE):
+         Component 4: Fleet Comparison Cards + AC Toggle + 3D Turntable
+         ================================================================= -->
+    <section id="scene-4" class="story-scene scene-fleet" aria-labelledby="scene4-title" data-scene="4">
+      <div class="scene-sticky-viewport fleet-showcase-layout gs-reveal">
+        <div class="fleet-left glass-panel">
+          <div class="scene-badge">SCENE 04 (70–90% SCROLL) · INTERACTIVE 3D FLEET SHOWCASE</div>
+          <h2 id="scene4-title" class="display-section">
+            Fleet Comparison &amp; 360° Turntable
+          </h2>
+
+          <!-- COMPONENT 4: FLEET COMPARISON CARDS -->
+          <div class="fleet-comparison-grid" role="tablist" aria-label="Compare and Select 3D Vehicle Class">
+            <button type="button" role="tab" aria-selected="true" class="fleet-comp-card fleet-tab active" data-fleet="innova">
+              <div class="fcc-top">
+                <span class="fleet-tab-name">Innova Crysta SUV</span>
+                <span class="fcc-rate-pill">₹18/km</span>
+              </div>
+              <span class="fleet-tab-cap">6+1 / 7+1 Captain Seats · 4 Bags + Carrier</span>
+              <div class="fcc-meta-row">
+                <span class="fcc-pkg-rate">Pkg: ₹3,400</span>
+                <span>Bata: ₹400/day</span>
+              </div>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="fleet-comp-card fleet-tab" data-fleet="tempo">
+              <div class="fcc-top">
+                <span class="fleet-tab-name">Tempo Traveller</span>
+                <span class="fcc-rate-pill">₹26/km</span>
+              </div>
+              <span class="fleet-tab-cap">12 / 17 Maharaja Pushback · Group Roof Bay</span>
+              <div class="fcc-meta-row">
+                <span class="fcc-pkg-rate">Pkg: ₹5,600</span>
+                <span>Bata: ₹600/day</span>
+              </div>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="fleet-comp-card fleet-tab" data-fleet="sedan">
+              <div class="fcc-top">
+                <span class="fleet-tab-name">Etios / Dzire Sedan</span>
+                <span class="fcc-rate-pill">₹13/km</span>
+              </div>
+              <span class="fleet-tab-cap">4+1 Comfort Cruiser · 500L Boot Space</span>
+              <div class="fcc-meta-row">
+                <span class="fcc-pkg-rate">Pkg: ₹2,400</span>
+                <span>Bata: ₹350/day</span>
+              </div>
+            </button>
+
+            <button type="button" role="tab" aria-selected="false" class="fleet-comp-card fleet-tab" data-fleet="coach">
+              <div class="fcc-top">
+                <span class="fleet-tab-name">Luxury AC Coach</span>
+                <span class="fcc-rate-pill">₹48/km</span>
+              </div>
+              <span class="fleet-tab-cap">35 / 45 Air-Suspension · Walk-in Hold</span>
+              <div class="fcc-meta-row">
+                <span class="fcc-pkg-rate">Pkg: ₹11,500</span>
+                <span>Bata: ₹900/day</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Interactive Controls: AC Toggle + Tariff Mode Toggle -->
+          <div class="fleet-toggles-bar">
+            <div class="toggle-box">
+              <span class="toggle-label">CLIMATE CONTROL (UPDATES 3D AIRFLOW &amp; RATE)</span>
+              <div class="pill-switch-group" role="group" aria-label="AC Toggle">
+                <button type="button" class="mode-pill active" id="ac-on-btn" data-ac="true">❄️ Dual-Zone AC ON</button>
+                <button type="button" class="mode-pill" id="ac-off-btn" data-ac="false">🌬️ Non-AC Breeze</button>
+              </div>
+            </div>
+
+            <div class="toggle-box">
+              <span class="toggle-label">TRANSPARENT TARIFF VIEW</span>
+              <div class="pill-switch-group" role="group" aria-label="Pricing Mode Toggle">
+                <button type="button" class="mode-pill active" id="mode-perkm-btn" data-tariff="perkm">🛣️ Outstation Per-KM</button>
+                <button type="button" class="mode-pill" id="mode-pkg-btn" data-tariff="package">🏖️ Selected Tour Package</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Pricing & Spec Breakdown -->
+          <div class="fleet-pricing-card" aria-live="polite">
+            <div class="price-hero-row">
+              <div>
+                <span class="price-kicker" id="fleet-tariff-kicker">TRANSPARENT OUTSTATION PER-KM RATE (DUAL-ZONE AC)</span>
+                <div class="price-big-wrap">
+                  <strong id="fleet-main-price" class="price-big">₹18</strong>
+                  <span id="fleet-price-unit" class="price-unit">/ km</span>
+                </div>
+              </div>
+              <div class="driver-bata-badge">
+                <span>DRIVER BATA</span>
+                <strong id="fleet-bata">₹400 / day</strong>
+              </div>
+            </div>
+
+            <dl class="fleet-specs-grid">
+              <div><dt>PASSENGERS</dt><dd id="spec-pax">6–7 Guests + Chauffeur</dd></div>
+              <div><dt>LUGGAGE</dt><dd id="spec-bags">4 Large Suitcases + Roof Carrier</dd></div>
+              <div><dt>ACTIVE PACKAGE</dt><dd id="spec-local-pkg">₹3,400 (Dhanushkodi Sunrise/Sunset)</dd></div>
+              <div><dt>HIGHWAY MIN</dt><dd id="spec-min-km">250 km / day outstation avg</dd></div>
+            </dl>
+
+            <div class="turntable-control-row">
+              <label for="fleet-rotate-slider" class="mono-tag">360° 3D TURNTABLE ANGLE:</label>
+              <input type="range" id="fleet-rotate-slider" min="-180" max="180" value="-28" />
+            </div>
+
+            <button type="button" id="lock-fleet-btn" class="gold-cta-btn full-width-btn magnetic-btn">
+              <span>Lock <span id="lock-fleet-name">Innova Crysta SUV (AC)</span> onto Boarding Pass</span>
+              <span aria-hidden="true">✦</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SCENE 5 (90–100% SCROLL - INTERACTIVE BOARDING PASS CHECKOUT):
+         Component 5: Perforated Boarding-Pass Booking Widget
+         ================================================================= -->
+    <section id="scene-5" class="story-scene scene-boarding" aria-labelledby="scene5-title" data-scene="5">
+      <div class="scene-sticky-viewport boarding-viewport gs-reveal">
+        <div class="boarding-header">
+          <span class="scene-badge">SCENE 05 (90–100% SCROLL) · STARLIT BIOLUMINESCENT HORIZON</span>
+          <h2 id="scene5-title" class="display-section">Perforated 3D Boarding-Pass Checkout</h2>
+          <p class="sub-prose">
+            Move your cursor to tilt the frosted boarding pass over the bioluminescent horizon. Submit your manifest to stamp <strong>“READY TO DEPART”</strong>.
+          </p>
+        </div>
+
+        <!-- COMPONENT 5: PERFORATED BOARDING-PASS BOOKING WIDGET -->
+        <div class="boarding-pass-perspective" id="bp-perspective">
+          <div id="boarding-pass-3d" class="boarding-pass-card">
+            <div class="bp-glare" id="bp-glare"></div>
+
+            <!-- Golden Rubber-Stamp Overlay (Triggered on Submit with Confetti & Sparkles) -->
+            <div id="ready-stamp" class="ready-to-depart-stamp" aria-hidden="true">
+              <div class="stamp-inner">
+                <span class="stamp-sub">09°09'09"N 79°26'46"E • READY TO DEPART</span>
+                <strong class="stamp-main">CONFIRMED • ARICHAL MUNAI EXPRESS</strong>
+                <span class="stamp-code" id="stamp-ref-id">VERIFIED • GATE PAMBAN-01</span>
+              </div>
+            </div>
+
+            <!-- Left Main Boarding Ticket -->
+            <div class="bp-main">
+              <div class="bp-top-bar">
+                <div class="bp-airline">
+                  <span class="bp-dot"></span>
+                  <strong>DHANUSHKODI TOURS &amp; TRAVELS · 09°09'09"N 79°26'46"E</strong>
+                </div>
+                <span class="bp-class-pill" id="bp-class-badge">INNOVA CRYSTA · AC</span>
+              </div>
+
+              <!-- Airport-Style Route Header -->
+              <div class="bp-route-banner">
+                <div class="bp-station">
+                  <span class="bp-iata" id="bp-from-code">DHK</span>
+                  <span class="bp-city" id="bp-from-name">Arichal Munai / Rameswaram</span>
+                </div>
+                <div class="bp-flight-arc" aria-hidden="true">
+                  <span class="bp-arc-line"></span>
+                  <span class="bp-vehicle-icon">✦ 🚐 ✦</span>
+                  <span class="bp-arc-dist" id="bp-route-dist">60 KM CORRIDOR</span>
+                </div>
+                <div class="bp-station bp-station-right">
+                  <span class="bp-iata" id="bp-to-code">SUN</span>
+                  <span class="bp-city" id="bp-to-name">Dhanushkodi Sunrise/Sunset Tour</span>
+                </div>
+              </div>
+
+              <!-- Interactive Booking Form Fields inside Boarding Pass -->
+              <form id="boarding-pass-form" class="bp-form" aria-label="Interactive Boarding Pass Booking Form">
+                <div class="bp-form-grid">
+                  <div class="bp-field">
+                    <label for="bp-passenger">PASSENGER NAME</label>
+                    <input type="text" id="bp-passenger" name="passenger" placeholder="e.g., Karthik Sundaram" required />
+                  </div>
+                  <div class="bp-field">
+                    <label for="bp-phone">WHATSAPP / MOBILE NUMBER</label>
+                    <input type="tel" id="bp-phone" name="phone" placeholder="+91 98765 43210" required />
+                  </div>
+                  <div class="bp-field">
+                    <label for="bp-date">TRAVEL DATE</label>
+                    <input type="date" id="bp-date" name="date" required />
+                  </div>
+                  <div class="bp-field">
+                    <label for="bp-route-select">TOUR PACKAGE OR CORRIDOR</label>
+                    <select id="bp-route-select" name="route">
+                      <optgroup label="Signature Tour Packages">
+                        <option value="dhanushkodi_sunset" selected>Dhanushkodi Sunrise/Sunset Tour (60 km)</option>
+                        <option value="rameswaram_local">Rameswaram Local Sightseeing — 12 Spots (85 km)</option>
+                        <option value="temple_circuit">Madurai-Rameswaram-Kanyakumari Temple Circuit (3D/2N)</option>
+                        <option value="hills_coast">Hills &amp; Coast Package — Rameswaram to Munnar/Kodai (5D/4N)</option>
+                      </optgroup>
+                      <optgroup label="Point-to-Point Outstation Corridors">
+                        <option value="madurai">Rameswaram / Dhanushkodi ➔ Madurai (175 km)</option>
+                        <option value="kanyakumari">Rameswaram ➔ Kanyakumari Coastal (310 km)</option>
+                        <option value="munnar">Rameswaram ➔ Munnar Tea Hills (335 km)</option>
+                        <option value="kodaikanal">Rameswaram ➔ Kodaikanal Hills (290 km)</option>
+                        <option value="ooty">Rameswaram ➔ Ooty Nilgiris (455 km)</option>
+                        <option value="tirupati">Rameswaram ➔ Tirupati Balaji (610 km)</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div class="bp-field">
+                    <label for="bp-fleet-select">VEHICLE FLEET</label>
+                    <select id="bp-fleet-select" name="fleet">
+                      <option value="innova" selected>Innova Crysta SUV (6+1 Captain)</option>
+                      <option value="tempo">Luxury Tempo Traveller (12/17 Seater)</option>
+                      <option value="sedan">Etios / Dzire Comfort Sedan (4+1)</option>
+                      <option value="coach">Luxury AC Coach (35/45 Seater)</option>
+                    </select>
+                  </div>
+                  <div class="bp-field">
+                    <label for="bp-ac-select">CLIMATE &amp; TARIFF</label>
+                    <select id="bp-ac-select" name="ac">
+                      <option value="true" selected>❄️ Dual-Zone AC (Recommended)</option>
+                      <option value="false">🌬️ Non-AC Saver Tariff</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="bp-submit-row">
+                  <div class="bp-live-fare">
+                    <span>TRANSPARENT ESTIMATED FARE</span>
+                    <strong id="bp-fare-total">₹3,400</strong>
+                    <small id="bp-fare-note">Includes Chauffeur Bata · Zero Hidden Charges</small>
+                  </div>
+                  <button type="submit" id="stamp-submit-btn" class="stamp-cta-btn magnetic-btn">
+                    <span>Stamp “READY TO DEPART” &amp; Confirm</span>
+                    <span aria-hidden="true">✦</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Perforated Divider -->
+            <div class="bp-perforation" aria-hidden="true">
+              <span class="notch notch-top"></span>
+              <span class="perf-line"></span>
+              <span class="notch notch-bottom"></span>
+            </div>
+
+            <!-- Right Boarding Stub -->
+            <div class="bp-stub">
+              <div class="stub-header">BOARDING STUB</div>
+              <div class="stub-kv">
+                <span>ORIGIN GPS</span>
+                <strong>09°09'09"N 79°26'46"E</strong>
+              </div>
+              <div class="stub-kv">
+                <span>PACKAGE / STOPS</span>
+                <strong id="stub-stops">Dhanushkodi Sunrise/Sunset</strong>
+              </div>
+              <div class="stub-kv">
+                <span>FLEET</span>
+                <strong id="stub-fleet">Innova Crysta AC</strong>
+              </div>
+              <div class="stub-kv">
+                <span>STATUS</span>
+                <strong id="stub-status" class="status-awaiting">AWAITING STAMP</strong>
+              </div>
+              <!-- SVG Barcode -->
+              <div class="stub-barcode" aria-hidden="true">
+                <svg viewBox="0 0 160 42" width="100%" height="42">
+                  <rect x="2" y="2" width="4" height="38" fill="#fde68a"/>
+                  <rect x="10" y="2" width="2" height="38" fill="#f8fafc"/>
+                  <rect x="16" y="2" width="6" height="38" fill="#00e5ff"/>
+                  <rect x="26" y="2" width="3" height="38" fill="#fde68a"/>
+                  <rect x="33" y="2" width="2" height="38" fill="#f8fafc"/>
+                  <rect x="39" y="2" width="7" height="38" fill="#fde68a"/>
+                  <rect x="50" y="2" width="2" height="38" fill="#f59e0b"/>
+                  <rect x="56" y="2" width="5" height="38" fill="#f8fafc"/>
+                  <rect x="65" y="2" width="3" height="38" fill="#fde68a"/>
+                  <rect x="72" y="2" width="8" height="38" fill="#f8fafc"/>
+                  <rect x="84" y="2" width="2" height="38" fill="#00e5ff"/>
+                  <rect x="90" y="2" width="4" height="38" fill="#fde68a"/>
+                  <rect x="98" y="2" width="6" height="38" fill="#f8fafc"/>
+                  <rect x="108" y="2" width="2" height="38" fill="#fde68a"/>
+                  <rect x="114" y="2" width="5" height="38" fill="#f59e0b"/>
+                  <rect x="123" y="2" width="3" height="38" fill="#f8fafc"/>
+                  <rect x="130" y="2" width="7" height="38" fill="#fde68a"/>
+                  <rect x="141" y="2" width="2" height="38" fill="#f8fafc"/>
+                  <rect x="147" y="2" width="6" height="38" fill="#00e5ff"/>
+                  <rect x="156" y="2" width="2" height="38" fill="#fde68a"/>
+                </svg>
+                <span class="barcode-num" id="stub-pnr">PNR: DHK-2026-ARICHAL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Three.js WebGL + GSAP ScrollTrigger + Complete Production Application Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
